@@ -1,2 +1,6 @@
 # DuinoStats
-A simple application of a Python library: pyduinocoin
+A simple application of a Python library: [pyduinocoin](https://github.com/BackrndSource/pyduinocoin)
+
+#Installing
+Before using it, you have to install [pyduinocoin](https://github.com/BackrndSource/pyduinocoin)
+<sub>pip install pyduinocoin</sub>
