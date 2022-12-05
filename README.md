@@ -1,5 +1,5 @@
 # DuinoStats
-Your duino dashboard in your terminal.
+Your Duino dashboard in your Terminal.
 
 ## Installing
 Before using it, you have to install [pyduinocoin](https://github.com/BackrndSource/pyduinocoin)
