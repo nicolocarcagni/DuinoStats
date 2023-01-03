@@ -11,13 +11,13 @@ class bcolors:
     BOLD = '\033[1m'
 
 clear = lambda: os.system('clear') # os.system('cls') on Windows Systems
+
 client = DuinoClient()\
 
 clear()
 
 c = 'r'
 e = 0
-r = 0
 
 username = input('Username: ')
 while c != 'q':
@@ -35,16 +35,8 @@ while c != 'q':
         c = input(bcolors.WARNING + '(r)efresh / (u)sername / (q)uit: ' + bcolors.ENDC)
         
         if c == 'r':
-            r = r + 1
-            if r == 2:
-                print('')
-                print(bcolors.WARNING + 'To avoid API overloading, stop refreshing for a while!' + bcolors.ENDC)
-                sleep(3)
-            elif r == 3:
-                print('')
-                print(bcolors.FAIL + 'To avoid a BAN, stop refreshing for a while!' + bcolors.ENDC)
-                sleep(35)
-                r = 0
+            print(bcolors.WARNING + '\nPlease wait to avoid API overloading...' + bcolors.ENDC)
+            sleep(8)
 
         if c == 'u':
             clear()
@@ -65,4 +57,6 @@ if e != 0:
         sleep(4)
 
 clear()
-print(bcolors.BOLD + 'Developed with ❤️  by iTzNikolovich' + bcolors.ENDC)
+
+print(bcolors.BOLD + 'Consider donating some DUCOs: ' + bcolors.ENDC + bcolors.OKGREEN + 'Nikolovich' + bcolors.ENDC)
+print(bcolors.BOLD + '\n====== Developed with ❤️  by iTzNikolovich ======\n' + bcolors.ENDC)
