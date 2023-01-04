@@ -18,7 +18,9 @@ clear()
 
 c = 'r'
 e = 0
-
+print(bcolors.OKGREEN + '==Developed by iTzNikolovich==' + bcolors.ENDC)
+print(bcolors.BOLD + '==========DuinoStats==========' + bcolors.ENDC)
+print(bcolors.FAIL + '==Developed by iTzNikolovich==\n' + bcolors.ENDC)
 username = input('Username: ')
 while c != 'q':
     clear()
