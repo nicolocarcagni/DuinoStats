@@ -2,13 +2,14 @@ import os
 from pyduinocoin import DuinoClient
 from time import sleep
 
-class bcolors:
-    HEADER = '\033[95m'
-    OKGREEN = '\033[92m'
-    WARNING = '\033[93m'
-    FAIL = '\033[91m'
-    ENDC = '\033[0m'
-    BOLD = '\033[1m'
+
+HEADER = '\033[95m'
+OKGREEN = '\033[92m'
+WARNING = '\033[93m'
+FAIL = '\033[91m'
+ENDC = '\033[0m'
+BOLD = '\033[1m'
+NL = '\n'
 
 clear = lambda: os.system('clear') # os.system('cls') on Windows Systems
 
@@ -18,10 +19,10 @@ clear()
 
 c = 'r'
 e = 0
-print(bcolors.OKGREEN + bcolors.BOLD + '==Developed by iTzNikolovich==' + bcolors.ENDC)
-print(bcolors.BOLD + '==========DuinoStats==========' + bcolors.ENDC)
-print(bcolors.FAIL + bcolors.BOLD + '==Developed by iTzNikolovich==\n' + bcolors.ENDC)
-username = input(bcolors.BOLD + 'Username: ' + bcolors.ENDC)
+print(f"{OKGREEN}{BOLD}== Developed by iTzNikolovich =={ENDC}")
+print(f"{BOLD}{'=' * 10} DuinoStats {'=' * 10}{ENDC}")
+print(f"{FAIL}{BOLD}== Developed by iTzNikolovich ==\n{ENDC}")
+username = input(f"{BOLD}Username: {ENDC}")
 while c != 'q':
     clear()
     try:
@@ -32,62 +33,65 @@ while c != 'q':
     else:
         n = 0
         h = 0
-        print(bcolors.OKGREEN + username + "'s balance: " + bcolors.ENDC + str(round(result.balance.balance, 3)) + ' ᕲ')
-        print('\n' + bcolors.OKGREEN + username + "'s miners: " + bcolors.ENDC)
+        print(f"{OKGREEN}{username}'s balance: {ENDC}{(round(result.balance.balance, 3))}{'ᕲ'}")
+        print(f"{NL}{OKGREEN}{username}'s miners:{ENDC}")
         for miner in result.miners:
-            print('- ' + miner.identifier + ': ' + str(round((miner.hashrate/1000))) + ' kH/s')
+            print(f"- {miner.identifier}: {str(round((miner.hashrate/1000)))} kH/s")
             n = n + 1
             h = (miner.hashrate + h)
             if(n > 0 and miner.rejected != 0):
-                print(bcolors.FAIL + 'There are some rejected share, check ' + miner.identifier + bcolors.ENDC)
-        print(bcolors.BOLD + 'Total miners: ' + bcolors.ENDC + bcolors.OKGREEN + str(n) + bcolors.ENDC)
+                print(f"{FAIL}There are some rejected share, check {miner.identifier}{ENDC}")
+        print(f"{BOLD}Total miners: {ENDC}{OKGREEN}{str(n)}{ENDC}")
         if(n > 0):
-            print(bcolors.BOLD + 'Total hashrate: ' + bcolors.ENDC + bcolors.OKGREEN + str(round(h / 1000)) + 'kH/s' + bcolors.ENDC)
-            print(bcolors.BOLD + 'Software: ' + bcolors.ENDC + bcolors.OKGREEN + miner.software + bcolors.ENDC)
+            print(f"{BOLD}Total hashrate: {ENDC}{OKGREEN}{(round(h / 1000))} kH/s{ENDC}")
+            print(f"{BOLD}Software: {ENDC}{OKGREEN}{miner.software}{ENDC}")
         
-        c = input(bcolors.WARNING + '\n(r)efresh / (u)sername / (t)ransactions / (q)uit: ' + bcolors.ENDC)
+        c = input(f"{WARNING}{NL}(r)efresh / (u)sername / (t)ransactions / (q)uit: {ENDC}")
         
         if c == 'r':
-            print(bcolors.WARNING + '\nPlease wait to avoid API overloading...' + bcolors.ENDC)
+            print(f"{WARNING}Please wait to avoid API overloading...{ENDC}")
             sleep(8)
         elif c == 'u':
             clear()
-            username = input('Username: ')
+            print(f"{OKGREEN}{BOLD}== Developed by iTzNikolovich =={ENDC}")
+            print(f"{BOLD}{'=' * 10} DuinoStats {'=' * 10}{ENDC}")
+            print(f"{FAIL}{BOLD}== Developed by iTzNikolovich ==\n{ENDC}")
+            username = input(f"{BOLD}Username: {ENDC}")
         elif c == 'q':
             clear()
         elif c == 't':
             clear()
-            print(bcolors.BOLD + 'Last 5 transactions:\n' + bcolors.ENDC)
+            print(f"{BOLD}Last 5 transactions:{NL}{ENDC}")
             for transactions in result.transactions:
-                    print(bcolors.BOLD + 'Recipient: ' + bcolors.ENDC + bcolors.OKGREEN + transactions.recipient + bcolors.ENDC)
-                    print(bcolors.BOLD + 'Sender: ' + bcolors.ENDC + bcolors.OKGREEN + transactions.sender + bcolors.ENDC)
-                    print(bcolors.BOLD + 'Date: ' + bcolors.ENDC + bcolors.OKGREEN + transactions.datetime + bcolors.ENDC)
-                    print(bcolors.BOLD + 'Amount: ' + bcolors.ENDC + bcolors.OKGREEN + str(transactions.amount) + bcolors.ENDC)
-                    print(bcolors.BOLD + 'Description: ' + bcolors.ENDC + bcolors.WARNING + str(transactions.memo) + bcolors.ENDC)
+                    print(f"{BOLD}Recipient: {ENDC}{OKGREEN}{transactions.recipient}{ENDC}")
+                    print(f"{BOLD}Sender: {ENDC}{OKGREEN}{transactions.sender}{ENDC}")
+                    print(f"{BOLD}Date: {ENDC}{OKGREEN}{transactions.datetime}{ENDC}")
+                    print(f"{BOLD}Amount: {ENDC}{OKGREEN}{transactions.amount}{'ᕲ'}{ENDC}")
+                    print(f"{BOLD}Description: {ENDC}{WARNING}{transactions.memo}{ENDC}")
                     print()
-            c = input(bcolors.WARNING + 'Insert anything to close: ' + bcolors.ENDC)
-            print(bcolors.WARNING + 'Please wait to avoid API overloading...' + bcolors.ENDC)
+            c = input(f"{WARNING}Insert anything to close: {ENDC}")
+            print(f"{WARNING}Please wait to avoid API overloading...{ENDC}")
             sleep(8)
         else:
-            print(bcolors.FAIL + 'Bad choice. Please wait to avoid API overloading...' + bcolors.ENDC)
+            print(f"{FAIL}Bad choice. Please wait to avoid API overloading...{ENDC}")
             sleep(8)
             c = 'r'
 
 if e != 0:
-    print(bcolors.FAIL + 'Error ', end='')
+    print(FAIL + 'Error ', end='')
     if e == 100:
         print('100: Check username or network')
-        print(bcolors.WARNING + 'If the error persists check server status at: ', end='')
-        print('https://status.duinocoin.com/' + bcolors.ENDC)
+        print(WARNING + 'If the error persists check server status at: ', end='')
+        print('https://status.duinocoin.com/' + ENDC)
         sleep(2)
     else:
-        print('Please try again in a while...' + bcolors.ENDC)
+        print('Please try again in a while...' + ENDC)
         sleep(0.5)
-        print(bcolors.WARNING + 'If the error persists check server status: ', end='')
-        print('https://status.duinocoin.com/' + bcolors.ENDC)
+        print(WARNING + 'If the error persists check server status: ', end='')
+        print('https://status.duinocoin.com/' + ENDC)
         sleep(2)
 
 clear()
 
-print(bcolors.BOLD + 'Consider donating some DUCOs: ' + bcolors.ENDC + bcolors.OKGREEN + 'Nikolovich' + bcolors.ENDC)
-print(bcolors.BOLD + '\n====== Developed with ❤️  by iTzNikolovich ======\n' + bcolors.ENDC)
+print(f"{BOLD}{OKGREEN}{'=' * 5} Consider donating some DUCOs: Nikolovich {'=' * 5}{ENDC}")
+print(f"{BOLD}{'=' * 12} Developed with ❤️  in Italy {'=' * 12}{ENDC}")
