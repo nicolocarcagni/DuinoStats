@@ -18,10 +18,10 @@ clear()
 
 c = 'r'
 e = 0
-print(bcolors.OKGREEN + '==Developed by iTzNikolovich==' + bcolors.ENDC)
+print(bcolors.OKGREEN + bcolors.BOLD + '==Developed by iTzNikolovich==' + bcolors.ENDC)
 print(bcolors.BOLD + '==========DuinoStats==========' + bcolors.ENDC)
-print(bcolors.FAIL + '==Developed by iTzNikolovich==\n' + bcolors.ENDC)
-username = input('Username: ')
+print(bcolors.FAIL + bcolors.BOLD + '==Developed by iTzNikolovich==\n' + bcolors.ENDC)
+username = input(bcolors.BOLD + 'Username: ' + bcolors.ENDC)
 while c != 'q':
     clear()
     try:
@@ -41,8 +41,8 @@ while c != 'q':
             if(n > 0 and miner.rejected != 0):
                 print(bcolors.FAIL + 'There are some rejected share, check ' + miner.identifier + bcolors.ENDC)
         print(bcolors.BOLD + 'Total miners: ' + bcolors.ENDC + bcolors.OKGREEN + str(n) + bcolors.ENDC)
-        print(bcolors.BOLD + 'Total hashrate: ' + bcolors.ENDC + bcolors.OKGREEN + str(round(h / 1000)) + 'kH/s' + bcolors.ENDC)
         if(n > 0):
+            print(bcolors.BOLD + 'Total hashrate: ' + bcolors.ENDC + bcolors.OKGREEN + str(round(h / 1000)) + 'kH/s' + bcolors.ENDC)
             print(bcolors.BOLD + 'Software: ' + bcolors.ENDC + bcolors.OKGREEN + miner.software + bcolors.ENDC)
         
         c = input(bcolors.WARNING + '\n(r)efresh / (u)sername / (t)ransactions / (q)uit: ' + bcolors.ENDC)
@@ -57,17 +57,14 @@ while c != 'q':
             clear()
         elif c == 't':
             clear()
-            print(bcolors.BOLD + 'Last 3 transactions:\n' + bcolors.ENDC)
-            i = 0
+            print(bcolors.BOLD + 'Last 5 transactions:\n' + bcolors.ENDC)
             for transactions in result.transactions:
-                while i < 3:
                     print(bcolors.BOLD + 'Recipient: ' + bcolors.ENDC + bcolors.OKGREEN + transactions.recipient + bcolors.ENDC)
                     print(bcolors.BOLD + 'Sender: ' + bcolors.ENDC + bcolors.OKGREEN + transactions.sender + bcolors.ENDC)
                     print(bcolors.BOLD + 'Date: ' + bcolors.ENDC + bcolors.OKGREEN + transactions.datetime + bcolors.ENDC)
                     print(bcolors.BOLD + 'Amount: ' + bcolors.ENDC + bcolors.OKGREEN + str(transactions.amount) + bcolors.ENDC)
                     print(bcolors.BOLD + 'Description: ' + bcolors.ENDC + bcolors.WARNING + str(transactions.memo) + bcolors.ENDC)
                     print()
-                    i = i + 1
             c = input(bcolors.WARNING + 'Insert anything to close: ' + bcolors.ENDC)
             print(bcolors.WARNING + 'Please wait to avoid API overloading...' + bcolors.ENDC)
             sleep(8)
