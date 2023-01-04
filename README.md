@@ -24,3 +24,6 @@ python duinostats.py
 
 ### Transactions screen
 <img width="710" alt="screen2" src="https://user-images.githubusercontent.com/64737169/210614517-b0fb9388-a20d-4d54-97de-f180c7cf7d87.png">
+
+## Donations
+### Consider donating some DUCOs: Nikolovich
