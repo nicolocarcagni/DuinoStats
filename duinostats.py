@@ -28,19 +28,51 @@ while c != 'q':
         c = 'q'
         e = 100
     else:
+        n = 0
+        h = 0
         print(bcolors.OKGREEN + username + "'s balance: " + bcolors.ENDC + str(round(result.balance.balance, 3)) + ' ᕲ')
-        print(bcolors.OKGREEN + username + "'s miners: " + bcolors.ENDC)
+        print('\n' + bcolors.OKGREEN + username + "'s miners: " + bcolors.ENDC)
         for miner in result.miners:
-            print('- ' + miner.identifier + ': ' + str(miner.hashrate) + ' H/s')
-        c = input(bcolors.WARNING + '(r)efresh / (u)sername / (q)uit: ' + bcolors.ENDC)
+            print('- ' + miner.identifier + ': ' + str(round((miner.hashrate/1000))) + ' kH/s')
+            n = n + 1
+            h = (miner.hashrate + h)
+            if(n > 0 and miner.rejected != 0):
+                print(bcolors.FAIL + 'There are some rejected share, check ' + miner.identifier + bcolors.ENDC)
+        print(bcolors.BOLD + 'Total miners: ' + bcolors.ENDC + bcolors.OKGREEN + str(n) + bcolors.ENDC)
+        print(bcolors.BOLD + 'Total hashrate: ' + bcolors.ENDC + bcolors.OKGREEN + str(round(h / 1000)) + 'kH/s' + bcolors.ENDC)
+        if(n > 0):
+            print(bcolors.BOLD + 'Software: ' + bcolors.ENDC + bcolors.OKGREEN + miner.software + bcolors.ENDC)
+        
+        c = input(bcolors.WARNING + '\n(r)efresh / (u)sername / (t)ransactions / (q)uit: ' + bcolors.ENDC)
         
         if c == 'r':
             print(bcolors.WARNING + '\nPlease wait to avoid API overloading...' + bcolors.ENDC)
             sleep(8)
-
-        if c == 'u':
+        elif c == 'u':
             clear()
             username = input('Username: ')
+        elif c == 'q':
+            clear()
+        elif c == 't':
+            clear()
+            print(bcolors.BOLD + 'Last 3 transactions:\n' + bcolors.ENDC)
+            i = 0
+            for transactions in result.transactions:
+                while i < 3:
+                    print(bcolors.BOLD + 'Recipient: ' + bcolors.ENDC + bcolors.OKGREEN + transactions.recipient + bcolors.ENDC)
+                    print(bcolors.BOLD + 'Sender: ' + bcolors.ENDC + bcolors.OKGREEN + transactions.sender + bcolors.ENDC)
+                    print(bcolors.BOLD + 'Date: ' + bcolors.ENDC + bcolors.OKGREEN + transactions.datetime + bcolors.ENDC)
+                    print(bcolors.BOLD + 'Amount: ' + bcolors.ENDC + bcolors.OKGREEN + str(transactions.amount) + bcolors.ENDC)
+                    print(bcolors.BOLD + 'Description: ' + bcolors.ENDC + bcolors.WARNING + str(transactions.memo) + bcolors.ENDC)
+                    print()
+                    i = i + 1
+            c = input(bcolors.WARNING + 'Insert anything to close: ' + bcolors.ENDC)
+            print(bcolors.WARNING + 'Please wait to avoid API overloading...' + bcolors.ENDC)
+            sleep(8)
+        else:
+            print(bcolors.FAIL + 'Bad choice. Please wait to avoid API overloading...' + bcolors.ENDC)
+            sleep(8)
+            c = 'r'
 
 if e != 0:
     print(bcolors.FAIL + 'Error ', end='')
@@ -48,13 +80,13 @@ if e != 0:
         print('100: Check username or network')
         print(bcolors.WARNING + 'If the error persists check server status at: ', end='')
         print('https://status.duinocoin.com/' + bcolors.ENDC)
-        sleep(4)
+        sleep(2)
     else:
         print('Please try again in a while...' + bcolors.ENDC)
         sleep(0.5)
         print(bcolors.WARNING + 'If the error persists check server status: ', end='')
         print('https://status.duinocoin.com/' + bcolors.ENDC)
-        sleep(4)
+        sleep(2)
 
 clear()
 
