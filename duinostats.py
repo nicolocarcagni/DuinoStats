@@ -1,4 +1,5 @@
 import os
+import datetime
 from pyduinocoin import DuinoClient
 from time import sleep
 import ctypes
@@ -6,6 +7,7 @@ import ctypes
 
 HEADER = '\033[95m'
 OKGREEN = '\033[92m'
+OKBLUE = '\033[94m'
 WARNING = '\033[93m'
 FAIL = '\033[91m'
 ENDC = '\033[0m'
@@ -40,20 +42,29 @@ while choice != 'q':
     else:
         miners = 0
         total_hashrate = 0
-        print(f"{OKGREEN}{username}'s balance: {ENDC}{(round(result.balance.balance, 3))}{'ᕲ'}")
-        print(f"{NL}{OKGREEN}{username}'s miners:{ENDC}")
+        if(result.balance.verified == "yes"):
+            print(f"{OKGREEN}{BOLD}{username}'s balance: {ENDC}{(round(result.balance.balance, 3))} ᕲ")
+        else:
+            print(f"{WARNING}{BOLD}{username}'s balance: {ENDC}{(round(result.balance.balance, 3))} ᕲ")
+            print(f"{WARNING}Your account is not verified. Check your web wallet")
+        if(result.balance.stakeamount != 0):
+            timestamp = result.balance.stakedate
+            stakedatereadable = datetime.datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d')
+            print(f"\n{OKBLUE}{BOLD}Staking: {ENDC}{result.balance.stakeamount} ᕲ, {OKBLUE}{BOLD}estimated reward: {ENDC}{result.balance.stakeamount * (1.5 / 100)} ᕲ, \n{OKBLUE}{BOLD}Ends on:{ENDC} {stakedatereadable}")
+        
+        print(f"{NL}{OKGREEN}{BOLD}{username}'s miners:{ENDC}")
         for miner in result.miners:
             print(f"- {miner.identifier}: {str(round((miner.hashrate/1000)))} kH/s")
             miners = miners + 1
             total_hashrate = (miner.hashrate + total_hashrate)
             if(miners > 0 and miner.rejected != 0):
-                print(f"{FAIL}There are some rejected share, check {miner.identifier}{ENDC}")
+                print(f"{FAIL}There are some rejected share ({miner.rejected}), check {miner.identifier}{ENDC}")
         print(f"{BOLD}Total miners: {ENDC}{OKGREEN}{str(miners)}{ENDC}")
         if(miners > 0):
             print(f"{BOLD}Total hashrate: {ENDC}{OKGREEN}{(round(total_hashrate / 1000))} kH/s{ENDC}")
             print(f"{BOLD}Software: {ENDC}{OKGREEN}{miner.software}{ENDC}")
         
-        choice = input(f"{WARNING}{NL}(r)efresh / (u)sername / (t)ransactions / (q)uit: {ENDC}")
+        choice = input(f"{WARNING}{NL}{BOLD}(r)efresh / (u)sername / (t)ransactions / (q)uit: {ENDC}")
         
         if choice == 'r':
             print(f"{WARNING}Please wait to avoid API overloading...{ENDC}")
@@ -66,11 +77,11 @@ while choice != 'q':
             clear()
             print(f"{BOLD}Last 5 transactions:{NL}{ENDC}")
             for transactions in result.transactions:
-                    print(f"{BOLD}Recipient: {ENDC + OKGREEN + transactions.recipient + ENDC}")
-                    print(f"{BOLD}Sender: {ENDC + OKGREEN + transactions.sender + ENDC}")
-                    print(f"{BOLD}Date: {ENDC + OKGREEN + transactions.datetime + ENDC}")
-                    print(f"{BOLD}Amount: {ENDC + OKGREEN + str(transactions.amount)}{' ᕲ'}{ENDC}")
-                    print(f"{BOLD}Description: {ENDC + WARNING + transactions.memo + ENDC}")
+                    print(f"{BOLD}Recipient: {ENDC}{OKGREEN}{transactions.recipient}{ENDC}")
+                    print(f"{BOLD}Sender: {ENDC}{OKGREEN}{transactions.sender}{ENDC}")
+                    print(f"{BOLD}Date: {ENDC}{OKGREEN}{transactions.datetime}{ENDC}")
+                    print(f"{BOLD}Amount: {ENDC}{OKGREEN}{str(transactions.amount)} ᕲ{ENDC}")
+                    print(f"{BOLD}Description: {ENDC}{WARNING}{transactions.memo}{ENDC}")
                     print()
             choice = input(f"{WARNING}Press anything to go back or (q)uit: {ENDC}")
             if choice == 'q':
