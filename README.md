@@ -7,13 +7,8 @@ Before using it, you have to install [pyduinocoin](https://github.com/BackrndSou
 ```bash
 $ pip install pyduinocoin
 ```
-## Executing
-If you're on a Windows system you have to edit line 13 with:
 
-```python
-clear = lambda: os.system('cls')
-```
-On UNIX system (MacOS, Linux) you can simply execute the script
+## Execute
 
 ```bash
 python duinostats.py
